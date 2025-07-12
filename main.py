@@ -798,7 +798,6 @@ all_lines_simple =  ["🕒更新时间,#genre#"] +[version] +[about] +[daily_mtv
 # ["🧨2025春晚🧨,#genre#"] + read_txt_to_array('专区/2025春晚.txt') + ['\n'] + \             
 # ["🌼台湾台,#genre#"] + read_txt_to_array('专区/♪台湾台.txt') + ['\n'] + \
 # ["🍓春晚直播,#genre#"] + sort_data(cw_dictionary,set(cw_lines))  + ['\n'] + \
- ["🍓春晚直播,#genre#"] + sort_data(cw_dictionary,set(cw_lines))  + ['\n'] + \
 # ["☕️解说频道,#genre#"]+ sorted(set(js_lines)) + ['\n'] + \
 # ["📺咪咕直播,#genre#"] + read_txt_to_array('专区/♪咪咕直播.txt') + ['\n'] + \
 # ["🏀体育赛事,#genre#"] + sorted(set(normalized_tyss_lines)) + ['\n'] + \
@@ -851,7 +850,7 @@ all_lines =  ["🕒更新时间,#genre#"] +[version]  +[about] +[daily_mtv]+read
              ["⚽️体育频道,#genre#"] + sort_data(ty_dictionary,set(correct_name_data(corrections_name,ty_lines))) + ['\n'] + \
              ["🌏英语频道,#genre#"] + read_txt_to_array('专区/♪英语频道.txt') + ['\n'] + \
              ["🎬电影点播,#genre#"]+ read_txt_to_array('专区/♪电影点播.txt') + ['\n'] + \
-             ["🔁电视剧,#genre#"] + read_txt_to_array('专区/♪电视剧.txt') + ['\n'] + \
+             ["📺电视剧,#genre#"] + read_txt_to_array('专区/♪电视剧.txt') + ['\n'] + \
              ["🎧收音机📶,,#genre#"] + sort_data(radio_dictionary,set(radio_lines))  + ['\n'] + \
              ["🌈港澳台,#genre#"] + read_txt_to_array('专区/♪港澳台.txt') + ['\n'] + \
              ["🏆️SPORTS,#genre#"] + read_txt_to_array('专区/♪sports.txt') + ['\n'] + \
