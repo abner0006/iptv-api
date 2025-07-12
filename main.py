@@ -854,7 +854,7 @@ all_lines =  ["🕒更新时间,#genre#"] +[version]  +[about] +[daily_mtv]+read
              ["🎧收音机📶,,#genre#"] + sort_data(radio_dictionary,set(radio_lines))  + ['\n'] + \
              ["🌈港澳台,#genre#"] + read_txt_to_array('专区/♪港澳台.txt') + ['\n'] + \
              ["🏆️SPORTS,#genre#"] + read_txt_to_array('专区/♪sports.txt') + ['\n'] + \
-             ["🐬儿童专享,#genre#"] + read_txt_to_array('专区/♪儿童专享.txt') + ['\n'] + \
+             ["🐬儿童专享,#genre#"] + read_txt_to_array('专区/♪儿童专享.txt') + ['\n'] 
 
 # # custom定制
 # custom_lines_zhang =  ["更新时间,#genre#"] +[version] + ['\n'] +\
