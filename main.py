@@ -773,7 +773,7 @@ version=formatted_time+","+about_video1
 about="xiaoranmuze,"+about_video2
 
 
-# 增加手工区 202505
+# 增加手工区 2025📶05
 print(f"处理手工区...")
 zj_lines = zj_lines + read_txt_to_array('手工区/浙江频道.txt')
 gd_lines = gd_lines + read_txt_to_array('手工区/广东频道.txt')
@@ -851,7 +851,7 @@ all_lines =  ["🕒更新时间,#genre#"] +[version]  +[about] +[daily_mtv]+read
              ["🌏英语频道,#genre#"] + read_txt_to_array('专区/♪英语频道.txt') + ['\n'] + \
              ["🎬电影点播,#genre#"]+ read_txt_to_array('专区/♪电影点播.txt') + ['\n'] + \
              ["📺电视剧,#genre#"] + read_txt_to_array('专区/♪电视剧.txt') + ['\n'] + \
-             ["🎧收音机📶,,#genre#"] + sort_data(radio_dictionary,set(radio_lines))  + ['\n'] + \
+             ["🎧收音机,#genre#"] + sort_data(radio_dictionary,set(radio_lines))  + ['\n'] + \
              ["🌈港澳台,#genre#"] + read_txt_to_array('专区/♪港澳台.txt') + ['\n'] + \
              ["🏆️SPORTS,#genre#"] + read_txt_to_array('专区/♪sports.txt') + ['\n'] + \
              ["🐬儿童专享,#genre#"] + read_txt_to_array('专区/♪儿童专享.txt') + ['\n'] 
