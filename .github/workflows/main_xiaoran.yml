@@ -1,0 +1,83 @@
+name: 'Daily Job xiaoran'
+
+on:
+  schedule:
+    - cron: '30 22 * * *'  # UTC时间22:30 → 北京时间6:30
+    - cron: '30 10 * * *'  # UTC时间10:30 → 北京时间18:30
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+
+jobs:
+  run_job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 确保有写入权限
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        ref: main  # 明确拉取main分支
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install opencc-python-reimplemented pytz
+
+    - name: Run Python script (首次生成文件)
+      run: python main.py
+
+    - name: Upload generated files
+      uses: actions/upload-artifact@v4
+      with:
+        name: generated-files
+        path: |
+          bbxx.txt
+          others_output.txt
+
+    - name: Commit and push changes
+      run: |
+        # 配置Git用户信息
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+
+        # 关键：强制重置工作区，放弃所有未提交修改（确保拉取时干净）
+        git reset --hard HEAD
+
+        # 拉取远程main分支最新代码
+        git pull origin main --rebase
+
+        # 重新生成文件（因重置会丢失之前的生成结果）
+        python main.py
+
+        # 确保history目录存在
+        mkdir -p history
+
+        # 提交主文件修改
+        git add bbxx.txt bbxx.m3u bbxx_lite.txt bbxx_lite.m3u others_output.txt tiyu.html
+        git commit -m ":tada: AutoUpdate $(date +'%Y%m%d')" || echo "No main file changes to commit"
+
+        # 生成并提交zip归档文件
+        current_datetime=$(date +"%Y%m%d_%H%M%S")
+        zip_filename="history/${current_datetime}_archive_output.zip"
+        zip -j "${zip_filename}" others_output.txt
+        git add "${zip_filename}"
+        git commit -m "Archive zipfile: ${current_datetime}" || echo "No zip file changes to commit"
+
+        # 推送修改到远程main分支
+        git push origin main
+
+    - name: Push changes (fallback)
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: main  # 明确指定推送分支

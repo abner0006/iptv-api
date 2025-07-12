@@ -1,0 +1,56 @@
+name: 'Daily Job(urlSnapshot)'
+
+on:
+  schedule:
+    - cron: '00 4 * * 0'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Daily Job(urlSnapshot)'
+        required: true
+        default: 'production'
+
+jobs:
+  run_job:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout repository using actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        ref: 'dev'  # 克隆 dev 分支
+        token: ${{ secrets.MY_GITHUB_TOKEN }}  # 显式使用 GitHub Token 进行身份验证
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests
+        
+    - name: Run Python script
+      run: python assets/snapshot/snapshot.py
+          
+    - name: 提交并推送（强制令牌）
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+        
+        # 拉取时带令牌
+        git pull https://${{ secrets.MY_GITHUB_TOKEN }}@github.com/abner0006/iptv-api.git dev --rebase
+        # 重新生成文件
+        python assets/snapshot/snapshot.py
+        
+        # 打包提交
+        current_datetime=$(date +"%Y%m%d_%H%M%S")
+        zip_filename="assets/snapshot/${current_datetime}_UrlSnapshot.zip"
+        zip -r "${zip_filename}" assets/snapshot/$(date +%Y-%m-%d)
+        git add "${zip_filename}"
+        git commit -m "(UrlSnapshot) token auth success" || echo "No changes"
+        
+        # 推送时带令牌
+        git push https://${{ secrets.MY_GITHUB_TOKEN }}@github.com/abner0006/iptv-api.git dev

@@ -1,0 +1,11 @@
+Love Nature 4K,https://d18dyiwu97wm6q.cloudfront.net/playlist2160p.m3u8
+Love Nature 4K,http://kkk.jjjj.jiduo.me/api.php?n=tttt&id=1761&tk=f6cc1e0a0e1a
+Loupe 4K,https://d2dw21aq0j0l5c.cloudfront.net/playlist_3840x2160.m3u8
+Loupe 4K,http://kkk.jjjj.jiduo.me/api.php?n=tttt&id=4726&tk=f6cc1e0a0e1a
+Fashion 4K,https://fash2043.cloudycdn.services/slive/ftv_ftv_4k_hevc_73d_42080_default_466_hls.smil/playlist.m3u8
+Fashion 4K,http://kkk.jjjj.jiduo.me/api.php?n=tttt&id=9831&tk=f6cc1e0a0e1a
+航拍中国第一季,http://hls.cntv.myhwcdn.cn/asp/hls/4000/0303000a/3/default/8edf3fb6a69148ea9a7dc0b5a9d99fdb/4000.m3u8
+航拍中国第二季,http://newcntv.qcloudcdn.com/asp/hls/4000/0303000a/3/default/2bdfdad540b342f592f9817cb7f3b79a/4000.m3u8
+地理中国,http://newcntv.qcloudcdn.com/asp/hls/1200/0303000a/3/default/c6baf6f74bb944aeacee1065ea72c798/1200.m3u8
+
+🐼直播熊猫,https://gcwbndali.v.myalicdn.com/gcwbnd/ipanda1000_2/index.m3u8

@@ -1,0 +1,69 @@
+name: 'Daily Job(special)'
+
+on:
+  schedule:
+    - cron: '30 23 * * *'  # UTC时间执行
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Daily Job(special)'
+        required: true
+        default: 'production'
+
+jobs:
+  run_job:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout with full PAT auth
+      run: |
+        # 直接用PAT克隆仓库，彻底绕开actions/checkout的权限问题
+        git clone https://${{ secrets.MY_GITHUB_TOKEN }}@github.com/abner0006/iptv-api.git .
+        git checkout main  # 切换到main分支
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        
+    - name: Run Python script
+      run: python assets/special/special.py
+
+    - name: Upload generated files
+      uses: actions/upload-artifact@v4
+      with:
+        name: special-generated-files
+        path: assets/special/special.txt
+
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "actions@github.com"
+        git config --local user.name "GitHub Actions"
+
+        # 拉取远程最新代码（带PAT权限）
+        git pull https://${{ secrets.MY_GITHUB_TOKEN }}@github.com/abner0006/iptv-api.git main --rebase
+
+        # 提交修改
+        git add assets/special/special.txt
+        if ! git diff --cached --quiet; then
+          git commit -m ":tv:  (special)AutoUpdate $(date +'%Y%m%d')"
+        else
+          echo "No changes to commit"
+          exit 0
+        fi
+
+        # 生成归档
+        mkdir -p history/special
+        current_datetime=$(date +"%Y%m%d_%H%M%S")
+        zip "history/special/${current_datetime}_special_output.zip" assets/special/special.txt
+        git add "history/special/${current_datetime}_special_output.zip"
+        git commit -m "(special) Archive zipfile: ${current_datetime}"
+
+        # 推送修改
+        git push https://${{ secrets.MY_GITHUB_TOKEN }}@github.com/abner0006/iptv-api.git main
